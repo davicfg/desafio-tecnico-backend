@@ -1,10 +1,8 @@
-import {Op} from 'sequelize'
 import Card from '../models/card'
 import { CardInput, CardOuput } from '../models/card'
 
 export const create = async (payload: CardInput): Promise<CardOuput> => {
-  const ingredient = await Card.create(payload)
-  return ingredient
+  return await Card.create(payload)
 } 
 
 export const update = async (id: number, payload: Partial<CardInput>): Promise<CardOuput> => {
@@ -16,7 +14,7 @@ export const update = async (id: number, payload: Partial<CardInput>): Promise<C
   return await (card as Card).update(payload)
 }
 
-export const getById = async (id: number): Promise<CardInput> => {
+export const getById = async (id: number): Promise<CardOuput> => {
   const card = await Card.findByPk(id)
   if (!card) {
       // @todo throw custom error
