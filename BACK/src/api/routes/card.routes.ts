@@ -2,8 +2,11 @@ import { CardDTO } from "./../dto/card.dto";
 import express, { Request, Response } from "express";
 import * as cardcontroller from "../controller/card";
 import { body, validationResult } from "express-validator";
+import auththorization from "../middleware/authorization"
 
 export const cardRouter = express.Router();
+
+cardRouter.use(auththorization)
 
 cardRouter.get("/", async (req: Request, res: Response) => {
   try {
