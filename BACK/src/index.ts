@@ -3,6 +3,9 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import {cardRouter} from "./api/routes/card.routes"
+import dbInit from './database/init'
+
+dbInit()
 
 dotenv.config();
 
