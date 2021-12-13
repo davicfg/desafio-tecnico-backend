@@ -6,10 +6,12 @@ interface CardAttributes {
   titulo: string;
   conteudo: string;
   lista: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface CardInput extends Optional<CardAttributes, 'id'> {}
-export interface CardOuput extends Required<CardAttributes> {}
+export interface CardOutput extends Required<CardAttributes> {}
 
 class Card extends Model<CardAttributes, CardInput> implements CardAttributes{
   public id!: number

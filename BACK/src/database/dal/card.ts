@@ -1,11 +1,11 @@
 import Card from '../models/card'
-import { CardInput, CardOuput } from '../models/card'
+import { CardInput, CardOutput } from '../models/card'
 
-export const create = async (payload: CardInput): Promise<CardOuput> => {
+export const create = async (payload: CardInput): Promise<CardOutput> => {
   return await Card.create(payload)
 } 
 
-export const update = async (id: number, payload: Partial<CardInput>): Promise<CardOuput> => {
+export const update = async (id: number, payload: Partial<CardInput>): Promise<CardOutput> => {
   const card = await Card.findByPk(id)
   if (!card) {
       // @todo throw custom error
@@ -14,7 +14,7 @@ export const update = async (id: number, payload: Partial<CardInput>): Promise<C
   return await (card as Card).update(payload)
 }
 
-export const getById = async (id: number): Promise<CardOuput> => {
+export const getById = async (id: number): Promise<CardOutput> => {
   const card = await Card.findByPk(id)
   if (!card) {
       // @todo throw custom error
@@ -30,6 +30,6 @@ export const deleteById = async (id: number): Promise<boolean> => {
   return !!deletedIngredientCount
 }
 
-export const getAll = async (): Promise<CardOuput[]> => {
+export const getAll = async (): Promise<CardOutput[]> => {
   return Card.findAll()
 }
