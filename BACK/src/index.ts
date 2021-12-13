@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import {cardRouter} from "./cards/card.routes"
+import {cardRouter} from "./api/cards/card.routes"
 
 dotenv.config();
 
