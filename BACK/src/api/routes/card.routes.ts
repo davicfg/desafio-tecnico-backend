@@ -16,13 +16,12 @@ cardRouter.get("/", async (req: Request, res: Response) => {
 
 cardRouter.post(
   "/",
-  [body("titulo").notEmpty(),
-  body("conteudo").notEmpty()],
+  [body("titulo").notEmpty(), body("conteudo").notEmpty()],
   async (req: Request, res: Response) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() });
       }
 
       const payload: CardDTO = req.body;
@@ -34,17 +33,33 @@ cardRouter.post(
   }
 );
 
-cardRouter.put("/:id", async (req: Request, res: Response) => {
-  try {
-    const id = Number(req.params.id);
-    const payload: CardDTO = req.body;
+cardRouter.put(
+  "/:id",
+  [body("titulo").notEmpty(), body("conteudo").notEmpty(),
+    body('id').custom((value, { req }) => {
+      if (value !== req.param.id) {
+        return false;
+      }
+      return true;
+    })
+  ],
+  async (req: Request, res: Response) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      
+      const id = Number(req.params.id);
+      const payload: CardDTO = req.body;
 
-    const result = await cardcontroller.update(id, payload);
-    return res.status(201).send(result);
-  } catch (e: any) {
-    res.status(500).send(e.message);
+      const result = await cardcontroller.update(id, payload);
+      return res.status(201).send(result);
+    } catch (e: any) {
+      res.status(500).send(e.message);
+    }
   }
-});
+);
 
 cardRouter.delete("/:id", async (req: Request, res: Response) => {
   try {
