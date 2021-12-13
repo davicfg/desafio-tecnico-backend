@@ -66,8 +66,9 @@ cardRouter.delete("/:id", async (req: Request, res: Response) => {
     const id = Number(req.params.id);
 
     const result = await cardcontroller.deleteById(id);
-    return res.status(204).send({
+    return res.status(result? 200: 404).send({
       success: result,
+      ...(result ? {data: await cardcontroller.getAll()} : {})
     });
   } catch (e: any) {
     res.status(500).send(e.message);
