@@ -1,6 +1,6 @@
 export type CardDTO = {
-    id: number;
-    titulo: string;
-    conteudo: string;
-    lista: string;
-}
+  id: number;
+  titulo: string;
+  conteudo: string;
+  lista: string;
+};

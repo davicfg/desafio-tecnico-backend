@@ -1,5 +1,5 @@
-import {  Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize';
 
-const sequelizeConnection = new Sequelize("sqlite::memory:")
+const sequelizeConnection = new Sequelize('sqlite::memory:d');
 
-export default sequelizeConnection
+export default sequelizeConnection;

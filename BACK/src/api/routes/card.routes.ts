@@ -1,14 +1,14 @@
-import { CardDTO } from "./../dto/card.dto";
-import express, { Request, Response } from "express";
-import * as cardcontroller from "../controller/card";
-import { body, validationResult } from "express-validator";
-import auththorization from "../middleware/authorization"
+import { CardDTO } from './../dto/card.dto';
+import express, { Request, Response } from 'express';
+import * as cardcontroller from '../controller/card';
+import { body, validationResult } from 'express-validator';
+import auththorization from '../middleware/authorization';
 
 export const cardRouter = express.Router();
 
-cardRouter.use(auththorization)
+cardRouter.use(auththorization);
 
-cardRouter.get("/", async (req: Request, res: Response) => {
+cardRouter.get('/', async (req: Request, res: Response) => {
   try {
     const results = await cardcontroller.getAll();
     return res.status(200).send(results);
@@ -18,8 +18,8 @@ cardRouter.get("/", async (req: Request, res: Response) => {
 });
 
 cardRouter.post(
-  "/",
-  [body("titulo").notEmpty(), body("conteudo").notEmpty()],
+  '/',
+  [body('titulo').notEmpty(), body('conteudo').notEmpty()],
   async (req: Request, res: Response) => {
     try {
       const errors = validationResult(req);
@@ -37,14 +37,16 @@ cardRouter.post(
 );
 
 cardRouter.put(
-  "/:id",
-  [body("titulo").notEmpty(), body("conteudo").notEmpty(),
+  '/:id',
+  [
+    body('titulo').notEmpty(),
+    body('conteudo').notEmpty(),
     body('id').custom((value, { req }) => {
       if (value !== req.param.id) {
         return false;
       }
       return true;
-    })
+    }),
   ],
   async (req: Request, res: Response) => {
     try {
@@ -52,7 +54,7 @@ cardRouter.put(
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-      
+
       const id = Number(req.params.id);
       const payload: CardDTO = req.body;
 
@@ -64,14 +66,14 @@ cardRouter.put(
   }
 );
 
-cardRouter.delete("/:id", async (req: Request, res: Response) => {
+cardRouter.delete('/:id', async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
 
     const result = await cardcontroller.deleteById(id);
-    return res.status(result? 200: 404).send({
+    return res.status(result ? 200 : 404).send({
       success: result,
-      ...(result ? {data: await cardcontroller.getAll()} : {})
+      ...(result ? { data: await cardcontroller.getAll() } : {}),
     });
   } catch (e: any) {
     res.status(500).send(e.message);
