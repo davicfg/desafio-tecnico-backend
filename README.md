@@ -22,3 +22,6 @@ Para rodá-lo, faça:
 
  - Mover as validações para um arquivo, ao invés de usar direto na rota; 
  - Criar migrations tanto para o usuário quando para o card;
+ - Criar testes para cada camada do sistema;
+ - Criar mais validações à medida que os dados vão trafegando dentro dos arquivos;
+ - Usar redis para cache da consulta para melhorar o tempo de resposta.
